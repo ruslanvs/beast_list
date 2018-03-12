@@ -22,10 +22,10 @@ class ViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
+        tableView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,8 +34,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
-
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
@@ -46,6 +46,11 @@ extension ViewController: UITableViewDataSource {
         cell.textLabel?.text = items[indexPath.row]
         return cell
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Section: \(indexPath.section) and Row: \(indexPath.row)")
+        items.remove( at: indexPath.row )
+        tableView.reloadData()
+    }
 }
 
